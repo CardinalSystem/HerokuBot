@@ -26,29 +26,3 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
   }
 })
-
-// to post data
-app.post('/webhook/', function (req, res) {
-  let messaging_events = req.body.entry[0].messaging
-  for (let i = 0; i < messaging_events.length; i++) {
-    let event = req.body.entry[0].messaging[i]
-    let sender = event.sender.id
-    if (event.message && event.message.text) {
-      let text = event.message.text
-      if (text === 'Generic'){ 
-        console.log("welcome to chatbot")
-        //sendGenericMessage(sender)
-        continue
-      }
-      sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-    }
-    if (event.postback) {
-      let text = JSON.stringify(event.postback)
-      sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-      continue
-    }
-  }
-  res.sendStatus(200)
-})
-
-const token = EAARE0ZATePjUBAEhZBsFlUxA655R5iYdf80tz3xCPX1roDZCcH43CWRR2HWcuYClZBy0qkXOCN7RP8k5aqCkw6zZCEcsKmUd5wBaplm3ZA8KcyjAf50y9hbGCH9LPerrZCSXQeIqBmZBpFnmFILktZBlBQEQZBurUmAMAXyoKFLQFtjgZDZD
