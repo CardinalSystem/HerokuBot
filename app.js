@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 
 // for facebook verification
 app.get('/webhook/', function (req, res) {
-  if (req.query['hub.verify_token'] === process.env.VERIFICATION_TOKEN) {
+  if (req.query['hub.verify_token'] === "this_is_my_token") {
     res.send(req.query['hub.challenge'])
   } else {
     res.send('Error, wrong token')
@@ -51,4 +51,4 @@ app.post('/webhook/', function (req, res) {
   res.sendStatus(200)
 })
 
-const token = process.env.PAGE_ACCESS_TOKEN
+const token = EAARE0ZATePjUBAEhZBsFlUxA655R5iYdf80tz3xCPX1roDZCcH43CWRR2HWcuYClZBy0qkXOCN7RP8k5aqCkw6zZCEcsKmUd5wBaplm3ZA8KcyjAf50y9hbGCH9LPerrZCSXQeIqBmZBpFnmFILktZBlBQEQZBurUmAMAXyoKFLQFtjgZDZD
