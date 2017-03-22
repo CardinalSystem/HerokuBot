@@ -1,10 +1,6 @@
 var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-
-var db = mongoose.connect(process.env.MONGODB_URI);
-var Movie = require("./models/movie");
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,18 +9,17 @@ app.listen((process.env.PORT || 5000));
 
 // Server index page
 app.get("/", function (req, res) {
-    res.send("Deployed!");
+  res.send("Deployed!");
 });
 
 // Facebook Webhook
 // Used for verification
 app.get("/webhook", function (req, res) {
-    if (req.query["hub.verify_token"] === process.env.VERIFICATION_TOKEN) {
-        console.log("Verified webhook");
-        res.status(200).send(req.query["hub.challenge"]);
-    } else {
-        console.error("Verification failed. The tokens do not match.");
-        res.sendStatus(403);
-    }
+  if (req.query["hub.verify_token"] === process.env.VERIFICATION_TOKEN) {
+    console.log("Verified webhook");
+    res.status(200).send(req.query["hub.challenge"]);
+  } else {
+    console.error("Verification failed. The tokens do not match.");
+    res.sendStatus(403);
+  }
 });
-
