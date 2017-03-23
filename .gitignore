@@ -1,3 +1,4 @@
 node_modules/
 SourceCode/
 demo/
+.DS_Store
