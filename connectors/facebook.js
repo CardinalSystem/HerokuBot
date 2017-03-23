@@ -9,7 +9,7 @@ var newRequest = request.defaults({
 	method: 'POST',
 	json: true,
 	qs: {
-		access_token: Config.VERIFICATION_TOKEN
+		access_token: Config.PAGE_ACCESS_TOKEN
 	},
 	headers: {
 		'Content-Type': 'application/json'
