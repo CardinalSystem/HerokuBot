@@ -55,3 +55,5 @@ const actions = {
 
 const client = new Wit({accessToken, actions});
 interactive(client);
+
+module.exports = quickstart;
