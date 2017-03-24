@@ -6,7 +6,7 @@ var request = require('request')
 
 var Config = require('./config')
 var FB = require('./connectors/facebook')
-var Bot = require('./bot')
+var Bot = require('./quickstart')
 
 
 // LETS MAKE A SERVER!
