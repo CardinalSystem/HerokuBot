@@ -1,6 +1,14 @@
 {
   "name": "spbot",
   "version": "1.0.0",
+<<<<<<< HEAD
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+=======
   "description": "SPBot Server",
   "main": "app.js",
   "scripts": {
@@ -8,11 +16,19 @@
     "start": "node app.js"
   },
   "author": "Joyce Echessa",
+>>>>>>> c0a2186a283dc5c5a4199d7731971c9891b226ce
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+<<<<<<< HEAD
+    "node-wit": "^3.3.2",
+    "request": "^2.81.0"
+  }
+}
+=======
     "mongoose": "^4.9.1",
     "request": "^2.81.0"
   }
 }
+>>>>>>> c0a2186a283dc5c5a4199d7731971c9891b226ce

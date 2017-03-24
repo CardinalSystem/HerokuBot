@@ -1,1 +1,8 @@
+<<<<<<< HEAD
 node_modules/
+SourceCode/
+demo/
+*.txt
+=======
+node_modules/
+>>>>>>> c0a2186a283dc5c5a4199d7731971c9891b226ce
