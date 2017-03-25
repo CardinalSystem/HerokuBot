@@ -37,24 +37,49 @@ app.get('/webhooks', function (req, res) {
 app.post('/webhooks', function (req, res) {
   var entry = FB.getMessageEntry(req.body)
   // IS THE ENTRY A VALID MESSAGE?
-  runWit(entry)
+  if (entry && entry.message) {
+        if (entry.message.attachments) {
+          // NOT SMART ENOUGH FOR ATTACHMENTS YET
+          FB.newMessage(entry.sender.id, "That's interesting!")
+        } 
+        else {
+          // SEND TO BOT FOR PROCESSING
+          Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
+            FB.newMessage(sender, reply)
+          })
+        } 
+
+  } else if (entry.postback){
+          Bot.read(entry.sender.id, entry.postback.payload, function (sender, reply) {
+            FB.newMessage(sender, reply)
+          })
+        } 
+
+  res.sendStatus(200)
 })
 
-function runWit(entry) {
-  if (entry && entry.message) {
-    if (entry.message.attachments) {
-      // NOT SMART ENOUGH FOR ATTACHMENTS YET
-      FB.newMessage(entry.sender.id, "That's interesting!")
-    }
-    else {
-      // SEND TO BOT FOR PROCESSING
-      Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
-        FB.newMessage(sender, reply)
-      })
-    }
-  } else if (entry.postback){
-      Bot.read(entry.sender.id, entry.postback.payload, function (sender, reply) {
-        FB.newMessage(sender, reply)
-      })
-  }
-}
+
+// app.post('/webhooks', function (req, res) {
+//   var entry = FB.getMessageEntry(req.body)
+//   // IS THE ENTRY A VALID MESSAGE?
+//   runWit(entry)
+// })
+
+// function runWit(entry) {
+//   if (entry && entry.message) {
+//     if (entry.message.attachments) {
+//       // NOT SMART ENOUGH FOR ATTACHMENTS YET
+//       FB.newMessage(entry.sender.id, "That's interesting!")
+//     }
+//     else {
+//       // SEND TO BOT FOR PROCESSING
+//       Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
+//         FB.newMessage(sender, reply)
+//       })
+//     }
+//   } else if (entry.postback){
+//       Bot.read(entry.sender.id, entry.postback.payload, function (sender, reply) {
+//         FB.newMessage(sender, reply)
+//       })
+//   }
+// }
