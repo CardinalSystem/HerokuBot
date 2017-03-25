@@ -57,7 +57,7 @@ var actions = {
 		else{
 			context.suffix = 'ค่ะ'
 		}
-
+		context.name = 'อาม'
 		return Promise.resolve(context)
 
 	},
@@ -69,7 +69,7 @@ var actions = {
 		else{
 			context.suffix = 'ค่ะ'
 		}
-
+		context.name = 'อาม'
 		return Promise.resolve(context)
 
 	},
@@ -81,7 +81,7 @@ var actions = {
 		else {
 			context.suffix = 'ค่ะ'
 		}
-
+		context.name = 'อาม'
 		return Promise.resolve(context)
 
 	},
