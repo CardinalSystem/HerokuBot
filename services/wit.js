@@ -28,7 +28,7 @@ var actions = {
 			if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
-	        	if (checkURL(message)) {
+	        	if (checkURL(response.text)) {
 					FB.newImage(id, response.text)
 				} else {
 					FB.newMessage(id, response.text)
