@@ -117,9 +117,9 @@ var newButtons = (id, msg, replies, cb) => {
 	return createMessage(id,
 {
     attachment: {
-      type: "template",
+      "type": "template",
       payload: {
-        template_type: "button",
+        "template_type": "button",
         text: msg,
         buttons: replies.map(item => ({
             content_type: "text",
