@@ -25,7 +25,7 @@ var actions = {
 			var id = request.context._fbid_;
         	console.log(JSON.stringify(response),JSON.stringify(request));
         	
-			if (reponse.quickreplies) {
+			if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
 	        	if (checkURL(message)) {
