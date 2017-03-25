@@ -20,6 +20,12 @@ var firstEntityValue = function (entities, entity) {
 
 
 var actions = {
+	send(req, res) {
+		console.log('send request: ', req)
+		console.log('send response: ', res)
+		
+
+	},
 	say (sessionId, context, message, cb) {
 		// Bot testing mode, run cb() and return
 		if (require.main === module) {
@@ -27,9 +33,8 @@ var actions = {
 			return
 		}
 
-		console.log('WIT WANTS TO TALK TO:', context._fbid_)
-		console.log('WIT HAS SOMETHING TO SAY:', message)
-		console.log('WIT HAS A CONTEXT:', context)
+		console.log('SAY WANTS TO TALK TO:', context)
+		console.log('SAY HAS SOMETHING TO SAY:', message)
 
 		if (checkURL(message)) {
 			FB.newMessage(context._fbid_, message, true)
