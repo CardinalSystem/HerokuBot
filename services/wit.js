@@ -108,13 +108,12 @@ var actions = {
 
 
 	sayHello({sessionId, context, entities}) {
-		var sex = firstEntityValue(entities, 'sex'){
-			if(sex == 'male'){
-				context.suffix = 'ครับ'
-			}
-			else{
-				context.suffix = 'ค่ะ'
-			}
+		var sex = firstEntityValue(entities, 'sex')
+		if(sex == 'male'){
+			context.suffix = 'ครับ'
+		}
+		else{
+			context.suffix = 'ค่ะ'
 		}
 		context.name = 'อาม'
 
