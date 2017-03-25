@@ -43,31 +43,20 @@ var actions = {
 	},
 
 	merge(sessionId, context, entities, message, cb) {
-		// Reset the weather story
-		delete context.forecast
+		// Reset variables
+		// delete context.suffix
+		// delete context.name
+		// Retrive name
+		// var name = firstEntityValue(entities, 'name')
+		// if (name) {
+		// 	context.name = name
+		// }
 
-		// Retrive the location entity and store it in the context field
-		var loc = firstEntityValue(entities, 'location')
-		if (loc) {
-			context.loc = loc
+		var sex = firstEntityValue(entities, 'sex')
+		if (sex) {
+			context.sex = sex
 		}
-
 		// Reset the cutepics story
-		delete context.pics
-
-		// Retrieve the category
-		var category = firstEntityValue(entities, 'category')
-		if (category) {
-			context.cat = category
-		}
-
-		// Retrieve the sentiment
-		var sentiment = firstEntityValue(entities, 'sentiment')
-		if (sentiment) {
-			context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
-		} else {
-			delete context.ack
-		}
 
 		cb(context)
 	},
@@ -77,7 +66,7 @@ var actions = {
 	},
 
 	// list of functions Wit.ai can execute
-	['fetch-weather'](sessionId, context, cb) {
+	['sayBye'](sessionId, context, cb) {
 		// Here we can place an API call to a weather service
 		// if (context.loc) {
 		// 	getWeather(context.loc)
@@ -89,15 +78,39 @@ var actions = {
 		// 		})
 		// }
 
-		context.forecast = 'Sunny'
+		if (context.sex == 'male') {
+			context.suffix = 'ครับ'
+		}
+		else
+		{
+			context.suffix = 'ค่ะ'
+		}
+		
+		cb(context)
+	},
+
+	['sayHello'](sessionId, context, cb) {
+		
+		if (context.sex == 'male') {
+			context.suffix = 'ครับ'
+		}
+		else
+		{
+			context.suffix = 'ค่ะ'
+		}
 
 		cb(context)
 	},
 
-	['fetch-pics'](sessionId, context, cb) {
-		var wantedPics = allPics[context.cat || 'default']
-		context.pics = wantedPics[Math.floor(Math.random() * wantedPics.length)]
-
+	['sayThanks'](sessionId, context, cb) {
+		
+		if (context.sex == 'male') {
+			context.suffix = 'ครับ'
+		}
+		else
+		{
+			context.suffix = 'ค่ะ'
+		}
 		cb(context)
 	},
 }
