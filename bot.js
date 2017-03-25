@@ -39,7 +39,7 @@ var read = function (sender, message, reply) {
 	} else {
 		// Let's find the user
 		FB.getUserProfile(sender, function (err, resp, data) {
-			console.log(err, resp, data)
+			console.log(data)
       		if(!err) {
         		var sessionId = findOrCreateSession(sender)
 				// Let's forward the message to the Wit.ai bot engine
