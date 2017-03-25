@@ -38,7 +38,7 @@ var actions = {
 				}
 			}
 			// clear context
-			// request.context.done = true;
+			request.context.done = true;
         	return resolve();
 
       })
@@ -95,7 +95,7 @@ var actions = {
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {
 	console.log('GRABBING WIT')
-	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325"})//,logger: new log.Logger(log.DEBUG)})
+	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325",logger: new log.Logger(log.DEBUG)})
 
 }
 
@@ -129,3 +129,5 @@ var getWeather = function (location) {
 var checkURL = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
+
+
