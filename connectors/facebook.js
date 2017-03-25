@@ -17,7 +17,7 @@ var newRequest = request.defaults({
 })
 
 var getUserProfile = (userId, callback) => request.get({
-	uri: "https://graph.facebook.com/v2.6/${userId}",
+	uri: "https://graph.facebook.com/v2.6/" + userId,
 	method: 'GET',
 	json: true,
 	qs: {

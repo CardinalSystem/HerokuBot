@@ -26,7 +26,7 @@ var actions = {
         	console.log('[send] [res]', JSON.stringify(response))
         	console.log('[send] [req]', JSON.stringify(request))
 
-      if (response.quickreplies) {
+      		if (response.quickreplies) {
 				FB.newLists(id, response.text, response.quickreplies)
 			// } else if (response.quickreplies) {
 			// 	FB.newQuickReply(id, response.text, response.quickreplies)
@@ -37,35 +37,12 @@ var actions = {
 					FB.newMessage(id, response.text)
 				}
 			}
+			// clear context
+			request.context.done = true;
         	return resolve();
 
       })
 	},
-	say ({sessionId, context, message}) {
-		// Bot testing mode, run cb() and return
-
-		console.log('SAY WANTS TO TALK TO:', context)
-		console.log('SAY HAS SOMETHING TO SAY:', message)
-
-		if (checkURL(message)) {
-			FB.newImage(context._fbid_, message)
-		} else {
-			FB.newMessage(context._fbid_, message)
-		}
-
-
-		return Promise.resolve(context)
-
-	},
-
-	stop({sessionId, context, entities, message}) {
-		// remove context for create a new session id
-		console.log('[converse] [stop]: ', context)
-		// store analytics
-		context = {}
-		return Promise.resolve(context);
-	},
-
 
 	error({sessionId, context}) {
 		console.log(error.message)
@@ -124,7 +101,7 @@ var actions = {
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {
 	console.log('GRABBING WIT')
-	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325",logger: new log.Logger(log.DEBUG)})
+	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325"})//,logger: new log.Logger(log.DEBUG)})
 
 }
 

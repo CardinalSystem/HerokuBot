@@ -13,7 +13,14 @@ var findOrCreateSession = function (fbid) {
   Object.keys(sessions).forEach(k => {
     if (sessions[k].fbid === fbid) {
       // YUP
-      sessionId = k
+      if (sessions[k].context.done) {
+      	sessionId = new Date().toISOString()
+      	sessions[sessionId] = Object.assign({}, sessions[k])
+      	delete sessions[sessionId].context.done
+      	delete sessions[k]
+      } else {
+        sessionId = k
+  	  }
     }
   })
 
