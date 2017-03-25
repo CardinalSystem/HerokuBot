@@ -38,7 +38,7 @@ var actions = {
 				}
 			}
 			// clear context
-			request.context.done = true;
+			// request.context.done = true;
         	return resolve();
 
       })
