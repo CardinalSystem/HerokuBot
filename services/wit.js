@@ -51,6 +51,28 @@ var actions = {
 		// if (name) {
 		// 	context.name = name
 		// }
+		var ord_type = firstEntityValue(entities, 'order_type')
+		if (ord_type == 'product') {
+			context.product = ord_type
+			delete context.printing
+			delete context.ask
+		}
+		else if (ord_type == 'printing') {
+			context.printing = ord_type
+			delete context.product
+			delete context.ask
+		} 
+		else
+		{
+			context.ask = ord_type
+			delete context.product
+			delete context.printing
+		}
+
+		var name = firstEntityValue(entities, 'name')
+		if (name) {
+			context.name = name
+		}
 
 		var sex = firstEntityValue(entities, 'sex')
 		if (sex) {
@@ -66,7 +88,7 @@ var actions = {
 	},
 
 	// list of functions Wit.ai can execute
-	['sayBye'](sessionId, context, cb) {
+	['sayBye'](sessionId, context, entities, cb) {
 		// Here we can place an API call to a weather service
 		// if (context.loc) {
 		// 	getWeather(context.loc)
@@ -77,7 +99,6 @@ var actions = {
 		// 			console.log(err)
 		// 		})
 		// }
-
 		if (context.sex == 'male') {
 			context.suffix = 'ครับ'
 		}
@@ -98,6 +119,8 @@ var actions = {
 		{
 			context.suffix = 'ค่ะ'
 		}
+
+		context.name = 'อาม'
 
 		cb(context)
 	},
