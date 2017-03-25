@@ -39,16 +39,16 @@ var findOrCreateSession = function (fbid) {
 }
 
 var read = function (sender, message, reply) {
-	if (message === 'hello') {
+	if (message === 'TestBot') {
 		// Let's reply back hello
-		message = 'Hello yourself! I am a chat bot. You can say "show me pics of corgis"'
+		message = 'Hello Cardinal"'
 		reply(sender, message)
 	} else {
 		// Let's find the user
 		var sessionId = findOrCreateSession(sender)
-		if (!sessions[sessionId].context.first_name) {
+		if (!sessions[sessionId].context.isFetchUser) {
+			sessions[sessionId].context.isFetchUser = true;
 			FB.getUserProfile(sender, function (err, resp, data) {
-				console.log(data)
 	      		if(!err) {
 	      			sessions[sessionId].context.first_name = data.first_name
 	      			sessions[sessionId].context.last_name = data.last_name
