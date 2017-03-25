@@ -119,7 +119,7 @@ var actions = {
 
 		return Promise.resolve(context)
 		
-	}
+	},
 	orderProduct({sessionId, context, entities}) {
 		context.productName = 'hello'
 		context.amount		= '2'
