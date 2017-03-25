@@ -23,8 +23,8 @@ var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
 			var id = request.context._fbid_;
-        	console.log('[send] [res]', JSON.stringify(response))
-        	console.log('[send] [req]', JSON.stringify(request))
+        	// console.log('[send] [res]', JSON.stringify(response))
+        	// console.log('[send] [req]', JSON.stringify(request))
 
       		if (response.quickreplies) {
 				FB.newButtons(id, response.text, response.quickreplies)
@@ -38,7 +38,7 @@ var actions = {
 				}
 			}
 			// clear context
-			request.context.done = true;
+			// request.context.done = true;
         	return resolve();
 
       })
