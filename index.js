@@ -38,6 +38,10 @@ app.post('/webhooks', function (req, res) {
   var entry = FB.getMessageEntry(req.body)
   // IS THE ENTRY A VALID MESSAGE?
   console.log(entry)
+  runWit(entry)
+})
+
+function runWit(entry) {
   if (entry && entry.message) {
     if (entry.message.attachments) {
       // NOT SMART ENOUGH FOR ATTACHMENTS YET
@@ -54,6 +58,4 @@ app.post('/webhooks', function (req, res) {
         FB.newMessage(sender, reply)
       })
   }
-
-  res.sendStatus(200)
-})
+}

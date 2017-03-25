@@ -13,8 +13,21 @@ var newRequest = request.defaults({
 	},
 	headers: {
 		'Content-Type': 'application/json'
-	},
+	}
 })
+
+var getUserProfile = (userId, callback) => request.get({
+	uri: "https://graph.facebook.com/v2.6/${userId}",
+	method: 'GET',
+	json: true,
+	qs: {
+		fields: ['first_name','last_name','gender'],
+		access_token: Config.PAGE_ACCESS_TOKEN
+	},
+	headers: {
+		'Content-Type': 'application/json'
+	}
+}, callback)
 
 // SETUP A MESSAGE FOR THE FACEBOOK REQUEST
 var createMessage = function (recipientId, message, cb) {
@@ -132,68 +145,70 @@ var newButtons = (id, msg, replies, cb) => {
 }
 
 var newLists = (id, msg, replies, cb) => {
+	var elements = [
+	{
+		"title": "Classic T-Shirt Collection",
+		"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+		"subtitle": "See all our colors",
+		default_action: {
+		  // "type": "web_url",
+		  // "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
+		  messenger_extensions: true,
+		  "webview_height_ratio": "tall",
+		  // "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		}
+		// buttons: [
+		//     {
+		//         "title": "View",
+		//         "type": "web_url",
+		//         "url": "https://peterssendreceiveapp.ngrok.io/collection",
+		//         messenger_extensions: true,
+		//         "webview_height_ratio": "tall",
+		//         // "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		//     }
+		// ]
+	}];
+
+	elements = elements.concat(
+		replies.map(item => ({
+			"title": "Classic White T-Shirt",
+			"image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+			"subtitle": "100% Cotton, 200% Comfortable",
+			// "default_action": {
+			//     "type": "web_url",
+			//     "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+			//     "messenger_extensions": true,
+			//     "webview_height_ratio": "tall",
+			//     "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+			// },
+			"buttons": [
+				{
+				  "type": "postback",
+				  title: item,
+				  payload: item,
+				  "messenger_extensions": true,
+				  "webview_height_ratio": "tall",
+				}
+			]
+		}))
+	)
 	return createMessage(id,
-{
-  attachment: {
-      "type": "template",
-      payload: {
-          "template_type": "list",
-          elements: [
-              {
-                  "title": "Classic T-Shirt Collection",
-                  "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                  "subtitle": "See all our colors",
-                  default_action: {
-                      // "type": "web_url",
-                      // "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
-                      messenger_extensions: true,
-                      "webview_height_ratio": "tall",
-                      // "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                  }
-                  // buttons: [
-                  //     {
-                  //         "title": "View",
-                  //         "type": "web_url",
-                  //         "url": "https://peterssendreceiveapp.ngrok.io/collection",
-                  //         messenger_extensions: true,
-                  //         "webview_height_ratio": "tall",
-                  //         // "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                  //     }
-                  // ]
-              },
-              {
-                replies.map(item => ({
-                  "title": "Classic White T-Shirt",
-                  "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
-                  "subtitle": "100% Cotton, 200% Comfortable",
-                  // "default_action": {
-                  //     "type": "web_url",
-                  //     "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
-                  //     "messenger_extensions": true,
-                  //     "webview_height_ratio": "tall",
-                  //     "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                  // },
-                  "buttons": [
-                      {
-                          "type": "postback",
-                          title: item,
-                          payload: item,
-                          "messenger_extensions": true,
-                          "webview_height_ratio": "tall",
-                      }
-                  ]
-              }
-            ))}
-          ]
-          //  "buttons": [
-          //     {
-          //         "title": "View More",
-          //         "type": "postback",
-          //         "payload": "payload"
-          //     }
-          // ]
-      }
-  }
+		{
+		  attachment: {
+		      "type": "template",
+		      payload: {
+		          "template_type": "list",
+		          elements
+		          //  "buttons": [
+		          //     {
+		          //         "title": "View More",
+		          //         "type": "postback",
+		          //         "payload": "payload"
+		          //     }
+		          // ]
+		      }
+		  }
+		})
 }
 // PARSE A FACEBOOK MESSAGE to get user, message body, or attachment
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference
@@ -211,11 +226,12 @@ var getMessageEntry = function (body) {
 }
 
 module.exports = {
-	newRequest: newRequest,
-	newMessage: newMessage,
-	newImage: newImage,
-	newQuickReply: newQuickReply,
-  newButtons: newButtons,
-  newLists: newLists,
-	getMessageEntry: getMessageEntry
+	newRequest,
+	newMessage,
+	newImage,
+	newQuickReply,
+  	newButtons,
+  	newLists,
+	getMessageEntry,
+	getUserProfile
 }

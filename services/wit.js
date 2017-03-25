@@ -23,7 +23,8 @@ var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
 			var id = request.context._fbid_;
-        	console.log(JSON.stringify(response),JSON.stringify(request));
+        	console.log('[send] [res]', JSON.stringify(response))
+        	console.log('[send] [req]', JSON.stringify(request))
 
       if (response.quickreplies) {
 				FB.newLists(id, response.text, response.quickreplies)
@@ -57,56 +58,14 @@ var actions = {
 
 	},
 
-	merge({sessionId, context, entities, message}) {
-		// Reset variables
-		// delete context.suffix
-		// delete context.name
-		// Retrive name
-		// var name = firstEntityValue(entities, 'name')
-		// if (name) {
-		// 	context.name = name
-		// }
-		var intent = firstEntityValue(entities, 'intent')
-		if (intent) {
-			context.intent = inte
-		}
-
-
-		var orderType = firstEntityValue(entities, 'order_type')
-		if (orderType) {
-			context.orderType = orderType
-		}
-
-
-		// 	context.product = ord_type
-		// 	delete context.printing
-		// 	delete context.ask
-		}
-		// else if (ord_type == 'printing') {
-		// 	context.printing = ord_type
-		// 	delete context.product
-		// 	delete context.ask
-		// }
-		// else
-		// {
-		// 	context.ask = ord_type
-		// 	delete context.product
-		// 	delete context.printing
-		// }
-
-		// var name = firstEntityValue(entities, 'name')
-		// if (name) {
-		// 	new_context.name = name
-		// }
-
-		// var sex = firstEntityValue(entities, 'sex')
-		// if (sex) {
-		// 	new_context.sex = sex
-		// }
-		// Reset the cutepics story
-
+	stop({sessionId, context, entities, message}) {
+		// remove context for create a new session id
+		console.log('[converse] [stop]: ', context)
+		// store analytics
+		context = {}
 		return Promise.resolve(context);
 	},
+
 
 	error({sessionId, context}) {
 		console.log(error.message)
@@ -199,30 +158,3 @@ var getWeather = function (location) {
 var checkURL = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
-
-// LIST OF ALL PICS
-var allPics = {
-  corgis: [
-    'http://i.imgur.com/uYyICl0.jpeg',
-    'http://i.imgur.com/useIJl6.jpeg',
-    'http://i.imgur.com/LD242xr.jpeg',
-    'http://i.imgur.com/Q7vn2vS.jpeg',
-    'http://i.imgur.com/ZTmF9jm.jpeg',
-    'http://i.imgur.com/jJlWH6x.jpeg',
-		'http://i.imgur.com/ZYUakqg.jpeg',
-		'http://i.imgur.com/RxoU9o9.jpeg',
-  ],
-  racoons: [
-    'http://i.imgur.com/zCC3npm.jpeg',
-    'http://i.imgur.com/OvxavBY.jpeg',
-    'http://i.imgur.com/Z6oAGRu.jpeg',
-		'http://i.imgur.com/uAlg8Hl.jpeg',
-		'http://i.imgur.com/q0O0xYm.jpeg',
-		'http://i.imgur.com/BrhxR5a.jpeg',
-		'http://i.imgur.com/05hlAWU.jpeg',
-		'http://i.imgur.com/HAeMnSq.jpeg',
-  ],
-  default: [
-    'http://blog.uprinting.com/wp-content/uploads/2011/09/Cute-Baby-Pictures-29.jpg',
-  ],
-};
