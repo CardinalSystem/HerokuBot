@@ -51,36 +51,41 @@ var actions = {
 		// if (name) {
 		// 	context.name = name
 		// }
-		var ord_type = firstEntityValue(entities, 'order_type')
-		if (ord_type == 'product') {
-			context.product = ord_type
-			delete context.printing
-			delete context.ask
-		}
-		else if (ord_type == 'printing') {
-			context.printing = ord_type
-			delete context.product
-			delete context.ask
-		} 
-		else
-		{
-			context.ask = ord_type
-			delete context.product
-			delete context.printing
-		}
+		console.log('call merge')
+		var new_context = {}
+
+
+		// var ord_type = firstEntityValue(entities, 'order_type')
+		// if (ord_type == 'product') {
+		// 	context.product = ord_type
+		// 	delete context.printing
+		// 	delete context.ask
+		// }
+		// else if (ord_type == 'printing') {
+		// 	context.printing = ord_type
+		// 	delete context.product
+		// 	delete context.ask
+		// } 
+		// else
+		// {
+		// 	context.ask = ord_type
+		// 	delete context.product
+		// 	delete context.printing
+		// }
 
 		var name = firstEntityValue(entities, 'name')
 		if (name) {
-			context.name = name
+			new_context.name = name
 		}
 
 		var sex = firstEntityValue(entities, 'sex')
 		if (sex) {
-			context.sex = sex
+			new_context.sex = sex
 		}
 		// Reset the cutepics story
 
-		cb(context)
+		cb(new_context)
+		context = new_context;
 	},
 
 	error(sessionId, context, error) {
