@@ -151,6 +151,6 @@ module.exports = {
 	newMessage: newMessage,
 	newImage: newImage,
 	newQuickReply: newQuickReply,
-  newButtons: newButtons,
+  	newButtons: newButtons,
 	getMessageEntry: getMessageEntry
 }
