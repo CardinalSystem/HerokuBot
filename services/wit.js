@@ -2,7 +2,7 @@
 
 var Config = require('../config')
 var FB = require('../connectors/facebook')
-var Wit = require('node-wit').Wit
+var {Wit, log} = require('node-wit')
 var request = require('request')
 
 
@@ -66,16 +66,22 @@ var actions = {
 		// if (name) {
 		// 	context.name = name
 		// }
-		console.log('call merge')
-		var new_context = {}
+		var intent = firstEntityValue(entities, 'intent')
+		if (intent) {
+			context.intent = inte
+		}
 
 
-		// var ord_type = firstEntityValue(entities, 'order_type')
-		// if (ord_type == 'product') {
+		var orderType = firstEntityValue(entities, 'order_type')
+		if (orderType) {
+			context.orderType = orderType
+		}
+
+
 		// 	context.product = ord_type
 		// 	delete context.printing
 		// 	delete context.ask
-		// }
+		}
 		// else if (ord_type == 'printing') {
 		// 	context.printing = ord_type
 		// 	delete context.product
@@ -159,7 +165,8 @@ var actions = {
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {
 	console.log('GRABBING WIT')
-	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325"})
+	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325",logger: new log.Logger(log.DEBUG)})
+
 }
 
 module.exports = {
