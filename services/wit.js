@@ -25,10 +25,10 @@ var actions = {
 			var id = request.context._fbid_;
         	console.log(JSON.stringify(response),JSON.stringify(request));
 
-      if (response.buttons) {
+      if (response.quickreplies) {
 				FB.newButtons(id, response.text, response.buttons)
-			} else if (response.quickreplies) {
-				FB.newQuickReply(id, response.text, response.quickreplies)
+			// } else if (response.quickreplies) {
+			// 	FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
 	        	if (checkURL(response.text)) {
 					FB.newImage(id, response.text)
