@@ -20,18 +20,14 @@ var firstEntityValue = function (entities, entity) {
 
 
 var actions = {
-	send(req, res) {
-		console.log('send request: ', req)
-		console.log('send response: ', res)
-		
-
+	send(request, response) {
+		return new Promise(function(resolve, reject) {
+        	console.log(JSON.stringify(response),JSON.stringify(request));
+        	return resolve();
+      })
 	},
-	say (sessionId, context, message, cb) {
+	say ({sessionId, context, message}) {
 		// Bot testing mode, run cb() and return
-		if (require.main === module) {
-			cb()
-			return
-		}
 
 		console.log('SAY WANTS TO TALK TO:', context)
 		console.log('SAY HAS SOMETHING TO SAY:', message)
@@ -43,11 +39,11 @@ var actions = {
 		}
 
 		
-		cb()
+		return Promise.resolve(context)
 		
 	},
 
-	merge(sessionId, context, entities, message, cb) {
+	merge({sessionId, context, entities, message}) {
 		// Reset variables
 		// delete context.suffix
 		// delete context.name
@@ -89,38 +85,17 @@ var actions = {
 		}
 		// Reset the cutepics story
 
-		cb(new_context)
-		context = new_context;
+		return Promise.resolve(context);
 	},
 
-	error(sessionId, context, error) {
+	error({sessionId, context}) {
 		console.log(error.message)
 	},
 
 	// list of functions Wit.ai can execute
-	['sayBye'](sessionId, context, entities, cb) {
-		// Here we can place an API call to a weather service
-		// if (context.loc) {
-		// 	getWeather(context.loc)
-		// 		.then(function (forecast) {
-		// 			context.forecast = forecast || 'sunny'
-		// 		})
-		// 		.catch(function (err) {
-		// 			console.log(err)
-		// 		})
-		// }
-		if (context.sex == 'male') {
-			context.suffix = 'ครับ'
-		}
-		else
-		{
-			context.suffix = 'ค่ะ'
-		}
-		
-		cb(context)
-	},
 
-	['sayHello'](sessionId, context, cb) {
+
+	sayHello({sessionId, context}) {
 		
 		if (context.sex == 'male') {
 			context.suffix = 'ครับ'
@@ -132,26 +107,16 @@ var actions = {
 
 		context.name = 'อาม'
 
-		cb(context)
-	},
-
-	['sayThanks'](sessionId, context, cb) {
+		return Promise.resolve(context)
 		
-		if (context.sex == 'male') {
-			context.suffix = 'ครับ'
-		}
-		else
-		{
-			context.suffix = 'ค่ะ'
-		}
-		cb(context)
-	},
+	}
+
 }
 
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {
 	console.log('GRABBING WIT')
-	return new Wit(Config.WIT_TOKEN, actions)
+	return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325"})
 }
 
 module.exports = {
