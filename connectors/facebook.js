@@ -109,9 +109,28 @@ var newQuickReply = (id, msg, replies, cb) => {
 			content_type: "text",
 			title: item,
 			payload: item
-		})) 
+		}))
 	}, cb);
 }
+
+var newButtons = (id, msg, replies, cb) => {
+	return createMessage(id,
+{
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "button",
+        text: msg,
+        buttons: replies.map(item => ({
+            content_type: "text",
+            title: item,
+            payload: item
+          }))
+        }
+      }
+  }, cb);
+}
+
 // PARSE A FACEBOOK MESSAGE to get user, message body, or attachment
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference
 var getMessageEntry = function (body) {
@@ -132,5 +151,6 @@ module.exports = {
 	newMessage: newMessage,
 	newImage: newImage,
 	newQuickReply: newQuickReply,
+  newButtons: newButtons,
 	getMessageEntry: getMessageEntry
 }

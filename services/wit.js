@@ -24,8 +24,10 @@ var actions = {
 		return new Promise(function(resolve, reject) {
 			var id = request.context._fbid_;
         	console.log(JSON.stringify(response),JSON.stringify(request));
-        	
-			if (response.quickreplies) {
+
+      if (response.buttons) {
+				FB.newButtons(id, response.text, response.buttons)
+			} else if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
 	        	if (checkURL(response.text)) {
@@ -50,9 +52,9 @@ var actions = {
 			FB.newMessage(context._fbid_, message)
 		}
 
-		
+
 		return Promise.resolve(context)
-		
+
 	},
 
 	merge({sessionId, context, entities, message}) {
@@ -78,7 +80,7 @@ var actions = {
 		// 	context.printing = ord_type
 		// 	delete context.product
 		// 	delete context.ask
-		// } 
+		// }
 		// else
 		// {
 		// 	context.ask = ord_type
@@ -108,7 +110,7 @@ var actions = {
 
 
 	sayHello({sessionId, context}) {
-		
+
 		if (context.sex == 'male') {
 			context.suffix = 'ครับ'
 		}
@@ -120,7 +122,7 @@ var actions = {
 		context.name = 'อาม'
 
 		return Promise.resolve(context)
-		
+
 	}
 
 }
