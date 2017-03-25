@@ -122,7 +122,7 @@ var newButtons = (id, msg, replies, cb) => {
         "template_type": "button",
         text: msg,
         buttons: replies.map(item => ({
-            content_type: "text",
+            "type": "text",
             title: item,
             payload: item
           }))
