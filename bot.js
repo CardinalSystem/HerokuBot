@@ -45,21 +45,33 @@ var read = function (sender, message, reply) {
 		reply(sender, message)
 	} else {
 		// Let's find the user
-		FB.getUserProfile(sender, function (err, resp, data) {
-			console.log(data)
-      		if(!err) {
-        		var sessionId = findOrCreateSession(sender)
-				// Let's forward the message to the Wit.ai bot engine
-				// This will run all actions until there are no more actions left to do
-				wit.runActions(
-					sessionId, // the user's current session by id
-					message,  // the user's message
-					sessions[sessionId].context
-				)
-      		} else {
-        		console.err(err, data);
-      		}
-  		})
+		var sessionId = findOrCreateSession(sender)
+		if (!sessions[sessionId].context.first_name) {
+			FB.getUserProfile(sender, function (err, resp, data) {
+				console.log(data)
+	      		if(!err) {
+	      			sessions[sessionId].context.first_name = data.first_name
+	      			sessions[sessionId].context.last_name = data.last_name
+	      			sessions[sessionId].context.sex = data.gender
+	      			sessions[sessionId].context.name = data.first_name + ' ' + data.last_name
+					// Let's forward the message to the Wit.ai bot engine
+					// This will run all actions until there are no more actions left to do
+					wit.runActions(
+						sessionId, // the user's current session by id
+						message,  // the user's message
+						sessions[sessionId].context
+					)
+	      		} else {
+	        		console.err(err, data);
+	      		}
+	  		})
+	  	} else {
+	  		wit.runActions(
+				sessionId, // the user's current session by id
+				message,  // the user's message
+				sessions[sessionId].context
+			)
+	  	}
 		
 	}
 }
