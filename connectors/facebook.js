@@ -21,7 +21,7 @@ var getUserProfile = (userId, callback) => request.get({
 	method: 'GET',
 	json: true,
 	qs: {
-		fields: ['first_name','last_name','gender'],
+		fields: 'first_name,last_name,gender',
 		access_token: Config.PAGE_ACCESS_TOKEN
 	},
 	headers: {
