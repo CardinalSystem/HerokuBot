@@ -86,15 +86,15 @@ var actions = {
 		// 	delete context.printing
 		// }
 
-		var name = firstEntityValue(entities, 'name')
-		if (name) {
-			new_context.name = name
-		}
+		// var name = firstEntityValue(entities, 'name')
+		// if (name) {
+		// 	new_context.name = name
+		// }
 
-		var sex = firstEntityValue(entities, 'sex')
-		if (sex) {
-			new_context.sex = sex
-		}
+		// var sex = firstEntityValue(entities, 'sex')
+		// if (sex) {
+		// 	new_context.sex = sex
+		// }
 		// Reset the cutepics story
 
 		return Promise.resolve(context);
@@ -107,16 +107,15 @@ var actions = {
 	// list of functions Wit.ai can execute
 
 
-	sayHello({sessionId, context}) {
-		
-		if (context.sex == 'male') {
-			context.suffix = 'ครับ'
+	sayHello({sessionId, context, entities}) {
+		var sex = firstEntityValue(entities, 'sex'){
+			if(sex == 'male'){
+				context.suffix = 'ครับ'
+			}
+			else{
+				context.suffix = 'ค่ะ'
+			}
 		}
-		else
-		{
-			context.suffix = 'ค่ะ'
-		}
-
 		context.name = 'อาม'
 
 		return Promise.resolve(context)
