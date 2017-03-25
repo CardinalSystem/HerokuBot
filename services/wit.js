@@ -22,8 +22,20 @@ var firstEntityValue = function (entities, entity) {
 var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
+			var id = request.context._fbid_;
         	console.log(JSON.stringify(response),JSON.stringify(request));
+        	
+			if (reponse.quickreplies) {
+				FB.newQuickReply(id, response.text, response.quickreplies)
+			} else if (response.text) {
+	        	if (checkURL(message)) {
+					FB.newImage(id, response.text)
+				} else {
+					FB.newMessage(id, response.text)
+				}
+			}
         	return resolve();
+
       })
 	},
 	say ({sessionId, context, message}) {
@@ -33,7 +45,7 @@ var actions = {
 		console.log('SAY HAS SOMETHING TO SAY:', message)
 
 		if (checkURL(message)) {
-			FB.newMessage(context._fbid_, message, true)
+			FB.newImage(context._fbid_, message)
 		} else {
 			FB.newMessage(context._fbid_, message)
 		}

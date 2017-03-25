@@ -17,16 +17,8 @@ var newRequest = request.defaults({
 })
 
 // SETUP A MESSAGE FOR THE FACEBOOK REQUEST
-var newMessage = function (recipientId, msg, atts, cb) {
-	var opts = {
-		form: {
-			recipient: {
-				id: recipientId
-			},
-		}
-	}
-
-	// https://developers.facebook.com/docs/messenger-platform/send-api-reference
+var createMessage = function (recipientId, message, cb) {
+	// https://developers.FACEBOOKbook.com/docs/messenger-platform/send-api-reference
 
 	// FOR IMAGES
 	// "message":{
@@ -61,29 +53,65 @@ var newMessage = function (recipientId, msg, atts, cb) {
 	//   }
 	// }
 
-	if (atts) {
-		var message = {
-			attachment: {
-				"type": "image",
-				"payload": {
-					"url": msg
-				}
+	// if (atts) {
+	// 	var message = {
+	// 		attachment: {
+	// 			"type": "image",
+	// 			"payload": {
+	// 				"url": msg
+	// 			}
+	// 		}
+	// 	}
+	// } else {
+	// 	var message = {
+	// 		text: msg
+	// 	}
+	// }
+
+	newRequest(
+		{
+			form: {
+				message,
+				recipient: {
+					id: recipientId
+				},
+			}
+		},
+		function (err, resp, data) {
+			if (cb) {
+				cb(err || data.error && data.error.message, data)
 			}
 		}
-	} else {
-		var message = {
-			text: msg
-		}
-	}
-	opts.form.message = message
-
-	newRequest(opts, function (err, resp, data) {
-		if (cb) {
-			cb(err || data.error && data.error.message, data)
-		}
-	})
+	);
 }
 
+var newMessage = (id, msg, cb) => {
+	return createMessage(id, {text: msg}, cb);
+}
+
+var newImage = (id, url, cb) => {
+	return createMessage(id,
+	{
+		attachment: {
+			"type": "image",
+			"payload": {
+				"url": msg
+			}
+		}
+	}, cb);
+}
+
+var newQuickReply = (id, msg, replies, cb) => {
+	return createMessage(id,
+	{
+		text: msg,
+		quick_replies: replies.map(item => ({
+			content_type: "text",
+			title: item,
+			payload: item
+		})) 
+	}, cb);
+}
 // PARSE A FACEBOOK MESSAGE to get user, message body, or attachment
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference
 var getMessageEntry = function (body) {
@@ -102,5 +130,7 @@ var getMessageEntry = function (body) {
 module.exports = {
 	newRequest: newRequest,
 	newMessage: newMessage,
-	getMessageEntry: getMessageEntry,
+	newImage: newImage,
+	newQuickReply: newQuickReply,
+	getMessageEntry: getMessageEntry
 }
