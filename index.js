@@ -6,7 +6,7 @@ var request = require('request')
 
 var Config = require('./config')
 var FB = require('./connectors/facebook')
-var Bot = require('./quickstart')
+var Bot = require('./bot')
 
 
 // LETS MAKE A SERVER!
@@ -40,7 +40,7 @@ app.post('/webhooks', function (req, res) {
   if (entry && entry.message) {
     if (entry.message.attachments) {
       // NOT SMART ENOUGH FOR ATTACHMENTS YET
-      FB.newMessage(entry.sender.id, "That's interesting!")
+      FB.newMessage(entry.sender.id, "That's good!")
     } else {
       // SEND TO BOT FOR PROCESSING
       Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
