@@ -38,7 +38,7 @@ var read = function (sender, message, reply) {
 		reply(sender, message)
 	} else {
 		// Let's find the user
-		FB.getUserProfile(entry.sender.id, function (err, resp, data) {
+		FB.getUserProfile(sender, function (err, resp, data) {
 			console.log(err, resp, data)
       		if(!err) {
         		var sessionId = findOrCreateSession(sender)
