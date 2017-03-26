@@ -26,11 +26,16 @@ var findOrCreateSession = function (fbid) {
         _fbid_: fbid
       }
     }
-  } else {
+    return newSessionId
+  } else if (sessions[sessionId].context.done) {
   	sessions[newSessionId] = Object.assign({}, sessions[sessionId])
+  	delete sessions[newSessionId].context.done
+  	delete sessions[sessionId];
+  	console.log('[bot sess]: ', sessions[newSessionId]);
+  	return newSessionId
   }
 
-  return newSessionId
+  return sessionId
 }
 
 var read = function (sender, message, reply) {

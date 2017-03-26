@@ -27,7 +27,7 @@ var actions = {
         	//console.log('[send] [req]', JSON.stringify(request))
 
       		if (response.quickreplies) {
-				FB.newQuickReply(id, response.text, response.quickreplies)
+				FB.newLists(id, response.text, response.quickreplies)
 			// } else if (response.quickreplies) {
 			// 	FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
@@ -42,6 +42,12 @@ var actions = {
         	return resolve();
 
       })
+	},
+
+	end({sessionId, context}) {
+		context.done = true
+		console.log('[end]: ', context, sessionId);
+		return Promise.resolve(context)
 	},
 
 	error({sessionId, context}) {
