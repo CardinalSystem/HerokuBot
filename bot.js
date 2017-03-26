@@ -13,29 +13,24 @@ var findOrCreateSession = function (fbid) {
   Object.keys(sessions).forEach(k => {
     if (sessions[k].fbid === fbid) {
       // YUP
-      if (sessions[k].context.done) {
-      	/*sessionId = new Date().toISOString()
-      	sessions[sessionId] = Object.assign({}, sessions[k])
-      	delete sessions[sessionId].context.done
-      	delete sessions[k]*/
-      } else {
         sessionId = k
-  	  }
     }
   })
 
   // No session so we will create one
+  var newSessionId = new Date().toISOString()
   if (!sessionId) {
-    sessionId = new Date().toISOString()
-    sessions[sessionId] = {
+    sessions[newSessionId] = {
       fbid: fbid,
       context: {
         _fbid_: fbid
       }
     }
+  } else {
+  	sessions[newSessionId] = Object.assign({}, sessions[newSessionId])
   }
 
-  return sessionId
+  return newSessionId
 }
 
 var read = function (sender, message, reply) {
