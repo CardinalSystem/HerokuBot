@@ -74,6 +74,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
   const runActions = (sessionId, message, context) => {
     newRequest({
       qs: {
+        context,
         v: apiVersion,
         session_id: sessionId,
         q: message
