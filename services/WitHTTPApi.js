@@ -33,9 +33,10 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           return actions[ body.action ](response).then(context => {
             newRequest({
               qs: {
+                context,
                 v: apiVersion,
                 session_id: sessionId,
-                q: ""
+                q: "",
               },
               body: context
             }, callback(sessionId, context));
@@ -48,6 +49,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           return actions.send(request, response).then(context => {
             newRequest({
               qs: {
+                context,
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""

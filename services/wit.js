@@ -24,11 +24,11 @@ var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
 			var id = request.context._fbid_;
-        	//console.log('[send] [res]', JSON.stringify(response))
+        	console.log('[send] [res]', JSON.stringify(response))
         	//console.log('[send] [req]', JSON.stringify(request))
 
       		if (response.quickreplies) {
-				FB.newLists(id, response.text, response.quickreplies)
+				FB.newQuickReply(id, response.text, response.quickreplies)
 			// } else if (response.quickreplies) {
 			// 	FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
