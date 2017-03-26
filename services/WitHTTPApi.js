@@ -20,8 +20,8 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     if (err) return Promise.reject()
     if (body) {
       
-      console.log('[callback]: ', sessionId, body.type + ':' + body.action, body.entities);
-      console.log('[callback]: ' + globalContext); //, context, body);
+      console.log('[callback]: ', sessionId, body.type + ':' + body.action);
+      console.log('[callback]: ' + JSON.stringify(globalContext)); //, context, body);
       
       const request = {sessionId, context: globalContext};
       const response = {sessionId, context: globalContext, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
