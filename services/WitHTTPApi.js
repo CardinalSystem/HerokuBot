@@ -32,17 +32,17 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: ' + body.action);
         } else {
 
-          return actions[ body.action ](response).then(context => {
-            globalContext = Object.assign(context || {}, globalContext);
-            console.log(body.action, context);
+          return actions[ body.action ](response).then(ret => {
+            globalContext = Object.assign(ret || {}, globalContext);
+            console.log(body.action, ret);
             newRequest({
               qs: {
-                context,
+                context: ret,
                 v: apiVersion,
                 session_id: sessionId,
                 q: "",
               },
-              body: context
+              body: ret
             }, callback(sessionId, globalContext));
           });
         }
@@ -50,16 +50,16 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.send) {
           throw new Error('not found: `send`');
         } else {
-          return actions.send(request, response).then(context => {
-            globalContext = Object.assign(context || {}, globalContext);
+          return actions.send(request, response).then(ret => {
+            globalContext = Object.assign(ret || {}, globalContext);
             newRequest({
               qs: {
-                context,
+                context: ret,
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""
               },
-              body: context
+              body: ret
             }, callback(sessionId, globalContext));
           }).catch(err => console.error(err));
         }
