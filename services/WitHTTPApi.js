@@ -17,7 +17,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
   });
 
   const callback = (sessionId, globalContext = {}) => (err, response, body) => {
-    if (err) contexturn Promise.reject()
+    if (err) return Promise.reject()
     if (body) {
       
       console.log('[callback]: ', sessionId, body.type + ':' + body.action);
@@ -32,7 +32,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: ' + body.action);
         } else {
 
-          contexturn actions[ body.action ](response).then(function (context) {
+          return actions[ body.action ](response).then(function (context) {
             Object.assign(globalContext, context || {});
             console.log(body.action, context);
             newRequest({
@@ -49,15 +49,16 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.send) {
           throw new Error('not found: `send`');
         } else {
-          contexturn actions.send(request, response).then(context => {
+          return actions.send(request, response).then(context => {
             Object.assign(globalContext, context || {});
             newRequest({
               qs: {
-                context,
+                context: context,
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""
-              }
+              },
+              body: context
             }, callback(sessionId, globalContext));
           }).catch(err => console.error(err));
         }
@@ -65,7 +66,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.stop) {
           throw new Error('not found: `stop`');
         }
-        contexturn actions.stop(response);
+        return actions.stop(response);
       }
     }
   };
@@ -79,7 +80,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
       }
     }, callback(sessionId, context));
   };
-  contexturn {
+  return {
     runActions,
     interactive: () => {}
   };
