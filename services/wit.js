@@ -130,16 +130,9 @@ var actions = {
 		var price = Math.random()*100000 + 100
 		// newContext.missingProductName = true
 		
-		if(productName && amount){
 			newContext.productName = productName
 			newContext.amount	= amount
 			newContext.price	= newContext.amount*price;
-		} else if(productName && !amount)
-		{	
-			newContext.productName = productName
-		} else {
-			
-		}//database
 
 		return Promise.resolve(newContext)
 	},
