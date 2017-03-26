@@ -16,11 +16,11 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     }
   });
 
-  const callback = (sessionId, context) => (err, response, body) => {
+  const callback = (sessionId, context = {}) => (err, response, body) => {
     if (err) return Promise.reject()
     if (body) {
       
-      console.log(body);
+      console.log(sessionId, context, body);
       
       const request = {sessionId, context};
       const response = {sessionId, context, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
