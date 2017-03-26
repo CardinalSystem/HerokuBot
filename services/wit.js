@@ -5,6 +5,8 @@ var FB = require('../connectors/facebook')
 var {Wit, log} = require('node-wit')
 var MyWit = require('./WitHTTPApi')
 var request = require('request')
+var sqlite3 = require('sqlite3').verbose()
+var db = new sqlite3Database('./database.db')
 
 
 var firstEntityValue = function (entities, entity) {
@@ -23,23 +25,23 @@ var firstEntityValue = function (entities, entity) {
 var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
-			
+
 			var id = request.context._fbid_;
-      
+
       console.log('[send]: ', response.text)
       //console.log('[send] [req]', JSON.stringify(request))
-      
+
       if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
-      
+
       	if (checkURL(response.text)) {
 					FB.newImage(id, response.text)
 				} else {
 					FB.newMessage(id, response.text)
 				}
 			}
-		 	
+
 		 	return resolve();
     })
 	},
@@ -93,9 +95,17 @@ var actions = {
 	},
 	orderProduct({sessionId, context, entities}) {
 		var newContext = {};
-		newContext.productName = 'hello'
-		newContext.amount		= '2'
-		newContext.price		= '100'
+		var name = firstEntityValue(entities, 'productName');
+		var amount = firstEntityValue(entities, 'amount');
+		var price
+		var productName
+		db.all('SELECT ProductName,ProductUnitPrice from Products where productName=%'+name+'%',function(err,rows){
+			price = rows.ProductUnitPrice;
+			productName = rows.ProductName;
+		});
+		newContext.productName = productName;
+		newContext.amount		= amount;
+		newContext.price		= newContext.amount*price;
 
 		return Promise.resolve(newContext)
 	}
@@ -140,5 +150,3 @@ var getWeather = function (location) {
 var checkURL = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
-
-
