@@ -16,7 +16,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     }
   });
 
-  const callback = (sessionId, globalContext = {}) => (err, response, body) => {
+  const callback = (sessionId, msg, globalContext = {}) => (err, response, body) => {
     if (err) return Promise.reject()
     if (body) {
       
@@ -34,6 +34,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
 
           return actions[ body.action ](response).then(context => {
             globalContext = Object.assign(context || {}, globalContext);
+            console.log(body.action, context);
             newRequest({
               qs: {
                 context,
