@@ -16,14 +16,14 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     }
   });
 
-  const callback = (sessionId, context = {}) => (err, response, body) => {
+  const callback = (sessionId, globalContext = {}) => (err, response, body) => {
     if (err) return Promise.reject()
     if (body) {
       
       console.log(sessionId, body.type + ':' + body.action, body.entities); //, context, body);
       
-      const request = {sessionId, context};
-      const response = {sessionId, context, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
+      const request = {sessionId, context: globalContext};
+      const response = {sessionId, context: globalContext, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
 
       if (body.type === 'action') {
         
@@ -32,6 +32,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         } else {
 
           return actions[ body.action ](response).then(context => {
+            globalContext = Object.assign(context, globalContext);
             newRequest({
               qs: {
                 context,
@@ -40,7 +41,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
                 q: "",
               },
               body: context
-            }, callback(sessionId, context));
+            }, callback(sessionId, globalContext));
           });
         }
       } else if (body.type === 'msg') {
@@ -48,6 +49,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: `send`');
         } else {
           return actions.send(request, response).then(context => {
+            globalContext = Object.assign(context, globalContext);
             newRequest({
               qs: {
                 context,
@@ -56,7 +58,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
                 q: ""
               },
               body: context
-            }, callback(sessionId, context));
+            }, callback(sessionId, globalContext));
           }).catch(err => console.error(err));
         }
       } else if (body.type === 'stop') {
