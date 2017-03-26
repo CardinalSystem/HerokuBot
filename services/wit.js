@@ -73,14 +73,13 @@ var actions = {
 	},
 	sayThanks({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
-		var myContext = {}
+		var suffix
 		if (sex == 'male' || context.suffix == 'ครับ'){
-			myContext.suffix = 'ครับ'
+			suffix = 'ครับ'
 		} else {
-			myContext.suffix = 'ค่ะ'
+			suffix = 'ค่ะ'
 		}
-		console.log({a:2});
-		return Promise.resolve({a: 2, myContext})
+		return Promise.resolve({suffix})
 	},
 	sayBye({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
