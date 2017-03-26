@@ -23,26 +23,25 @@ var firstEntityValue = function (entities, entity) {
 var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
+			
 			var id = request.context._fbid_;
-        	console.log('[send]: ', response.text)
-        	//console.log('[send] [req]', JSON.stringify(request))
-
-      		if (response.quickreplies) {
+      
+      console.log('[send]: ', response.text)
+      //console.log('[send] [req]', JSON.stringify(request))
+      
+      if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
-			// } else if (response.quickreplies) {
-			// 	FB.newQuickReply(id, response.text, response.quickreplies)
 			} else if (response.text) {
-	        	if (checkURL(response.text)) {
+      
+      	if (checkURL(response.text)) {
 					FB.newImage(id, response.text)
 				} else {
 					FB.newMessage(id, response.text)
 				}
 			}
-			// clear context
-			request.context.done = true;
-        	return resolve();
-
-      })
+		 	
+		 	return resolve();
+    })
 	},
 	stop({sessionId, context}) {
 		context.done = true
@@ -62,43 +61,47 @@ var actions = {
 	// list of functions Wit.ai can execute
 	sayHello({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
+		var _context = {}
 		if(sex == 'male' || context.suffix == 'ครับ') {
-			context.suffix = 'ครับ'
+			_context.suffix = 'ครับ'
 		}
 		else{
-			context.suffix = 'ค่ะ'
+			_context.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(context)
+		return Promise.resolve(_context)
 
 	},
 	sayThanks({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
+		var _context = {}
 		if(sex == 'male' || context.suffix == 'ครับ'){
-			context.suffix = 'ครับ'
+			_context.suffix = 'ครับ'
 		}
 		else{
-			context.suffix = 'ค่ะ'
+			_context.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(context)
+		return Promise.resolve(_context)
 
 	},
 	sayBye({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
+		var _context = {};
 		if(sex == 'male' || context.suffix == 'ครับ'){
-			context.suffix = 'ครับ'
+			_context.suffix = 'ครับ'
 		}
 		else {
-			context.suffix = 'ค่ะ'
+			_context.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(context)
+		return Promise.resolve(_context)
 
 	},
 	orderProduct({sessionId, context, entities}) {
-		context.productName = 'hello'
-		context.amount		= '2'
-		context.price		= '100'
+		var newContext = {};
+		newContext.productName = 'hello'
+		newContext.amount		= '2'
+		newContext.price		= '100'
 
-		return Promise.resolve(context)
+		return Promise.resolve(newContext)
 	}
 
 }

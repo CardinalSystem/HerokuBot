@@ -32,7 +32,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         } else {
 
           return actions[ body.action ](response).then(context => {
-            globalContext = Object.assign(context, globalContext);
+            globalContext = Object.assign(context || {}, globalContext);
             newRequest({
               qs: {
                 context,
@@ -49,7 +49,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: `send`');
         } else {
           return actions.send(request, response).then(context => {
-            globalContext = Object.assign(context, globalContext);
+            globalContext = Object.assign(context || {}, globalContext);
             newRequest({
               qs: {
                 context,
