@@ -31,6 +31,8 @@ var actions = {
       
       if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
+				//FB.newCarousels(id, response.text, response.quickreplies)
+				//FB.newLists(id, response.text, response.quickreplies)
 			} else if (response.text) {
       
       	if (checkURL(response.text)) {
