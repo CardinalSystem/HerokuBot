@@ -128,7 +128,7 @@ var actions = {
 		var productName = firstEntityValue(entities, 'productName');
 		var amount = firstEntityValue(entities, 'amount');
 		var price = Math.random()*100000 + 100
-		newContext.missingProductName = true
+		// newContext.missingProductName = true
 		
 		if(productName && amount){
 			newContext.productName = productName
