@@ -96,7 +96,12 @@ var actions = {
 
 	},
 	orderProduct({sessionId, context, entities}) {
+		
 		var newContext = {};
+		if()
+		{
+
+		}
 		var name = firstEntityValue(entities, 'productName');
 		var amount = firstEntityValue(entities, 'amount');
 		var price
@@ -108,13 +113,17 @@ var actions = {
 		newContext.productName = productName;
 		newContext.amount		= amount;
 		newContext.price		= newContext.amount*price;
-		if(productName){
+		if(productName && amount){
 			newContext.productName = productName
-		}
-		if(amount){
-			newContext.amount		= amount
-		}
-		newContext.price		= '100' //database
+			newContext.amount	= amount
+			newContext.price = price
+		} else if(productName && amount = {})
+		{	
+			newContext.productName = productName
+			delete newContext.productName
+		} else {
+			newContext.missingProductName = true
+		}//database
 
 		return Promise.resolve(newContext)
 	},
