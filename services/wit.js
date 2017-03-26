@@ -44,7 +44,11 @@ var actions = {
 
       })
 	},
-
+	stop({sessionId, context}) {
+		context.done = true
+		console.log('[stop]: ', context, sessionId);
+		return Promise.resolve(context)
+	},
 	end({sessionId, context}) {
 		context.done = true
 		console.log('[end]: ', context, sessionId);
