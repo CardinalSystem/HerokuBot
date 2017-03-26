@@ -14,10 +14,10 @@ var findOrCreateSession = function (fbid) {
     if (sessions[k].fbid === fbid) {
       // YUP
       if (sessions[k].context.done) {
-      	sessionId = new Date().toISOString()
+      	/*sessionId = new Date().toISOString()
       	sessions[sessionId] = Object.assign({}, sessions[k])
       	delete sessions[sessionId].context.done
-      	delete sessions[k]
+      	delete sessions[k]*/
       } else {
         sessionId = k
   	  }
