@@ -24,7 +24,7 @@ var actions = {
 	send(request, response) {
 		return new Promise(function(resolve, reject) {
 			var id = request.context._fbid_;
-        	console.log('[send] [res]', JSON.stringify(response))
+        	console.log('[send]: ', response.text)
         	//console.log('[send] [req]', JSON.stringify(request))
 
       		if (response.quickreplies) {

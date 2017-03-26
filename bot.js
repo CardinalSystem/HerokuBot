@@ -31,7 +31,7 @@ var findOrCreateSession = function (fbid) {
   	sessions[newSessionId] = Object.assign({}, sessions[sessionId])
   	delete sessions[newSessionId].context.done
   	delete sessions[sessionId];
-  	console.log('[bot sess]: ', sessions[newSessionId]);
+  	//console.log('[bot sess]: ', sessions[newSessionId]);
   	return newSessionId
   }
 
@@ -46,6 +46,7 @@ var read = function (sender, message, reply) {
 	} else {
 		// Let's find the user
 		var sessionId = findOrCreateSession(sender)
+    console.log('[bot] [read]: ' + message);
 		if (!sessions[sessionId].context.isFetchUser) {
 			sessions[sessionId].context.isFetchUser = true;
 			FB.getUserProfile(sender, function (err, resp, data) {
