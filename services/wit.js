@@ -92,13 +92,25 @@ var actions = {
 
 	},
 	orderProduct({sessionId, context, entities}) {
+		var productName = firstEntityValue(entities, 'productName')
+		var amount		= firstEntityValue(entities, 'amount')
 		var newContext = {};
-		newContext.productName = 'hello'
-		newContext.amount		= '2'
-		newContext.price		= '100'
+		if(productName){
+			newContext.productName = productName
+		}
+		if(amount){
+			newContext.amount		= amount
+		}
+		newContext.price		= '100' //database
 
 		return Promise.resolve(newContext)
-	}
+	},
+	payment({sessionId, context, entities}) {
+		var price	 = firstEntityValue(entities, 'productName')
+		newContext.price		= '100' //database
+
+		return Promise.resolve(newContext)
+
 
 }
 
