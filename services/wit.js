@@ -33,6 +33,8 @@ var actions = {
 
       if (response.quickreplies) {
 				FB.newQuickReply(id, response.text, response.quickreplies)
+				//FB.newCarousels(id, response.text, response.quickreplies)
+				//FB.newLists(id, response.text, response.quickreplies)
 			} else if (response.text) {
 
       	if (checkURL(response.text)) {
@@ -106,6 +108,20 @@ var actions = {
 		newContext.productName = productName;
 		newContext.amount		= amount;
 		newContext.price		= newContext.amount*price;
+		if(productName){
+			newContext.productName = productName
+		}
+		if(amount){
+			newContext.amount		= amount
+		}
+		newContext.price		= '100' //database
+
+		return Promise.resolve(newContext)
+	},
+	payment({sessionId, context, entities}) {
+		var newContext = {};
+		var price	 = firstEntityValue(entities, 'productName')
+		newContext.price		= '100' //database
 
 		return Promise.resolve(newContext)
 	}
