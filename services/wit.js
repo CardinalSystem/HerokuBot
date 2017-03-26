@@ -95,24 +95,45 @@ var actions = {
 		return Promise.resolve(myContext)
 
 	},
+	// orderProduct({sessionId, context, entities}) {
+		
+	// 	var newContext = {};
+	// 	var name = firstEntityValue(entities, 'productName');
+	// 	var amount = firstEntityValue(entities, 'amount');
+	// 	var price
+	// 	var productName
+	// 	db.all('SELECT ProductName,ProductUnitPrice from Products where productName=%'+name+'%',function(err,rows){
+	// 		price = rows.ProductUnitPrice;
+	// 		productName = rows.ProductName;
+		
+	// 	newContext.productName = productName;
+	// 	newContext.amount		= amount;
+	// 	newContext.price		= newContext.amount*price;
+	// 	if(productName && amount){
+	// 		newContext.productName = productName
+	// 		newContext.amount	= amount
+	// 		newContext.price = price
+	// 	} else if(productName && !amount)
+	// 	{	
+	// 		newContext.productName = productName
+	// 	} else {
+	// 		newContext.missingProductName = true
+	// 	}//database
+
+	// 	return Promise.resolve(newContext)
+	// }
 	orderProduct({sessionId, context, entities}) {
 		
 		var newContext = {};
-		var name = firstEntityValue(entities, 'productName');
+		var productName = firstEntityValue(entities, 'productName');
 		var amount = firstEntityValue(entities, 'amount');
-		var price
-		var productName
-		db.all('SELECT ProductName,ProductUnitPrice from Products where productName=%'+name+'%',function(err,rows){
-			price = rows.ProductUnitPrice;
-			productName = rows.ProductName;
+		var price = Math.random()*100000 + 100
+	
 		
-		newContext.productName = productName;
-		newContext.amount		= amount;
-		newContext.price		= newContext.amount*price;
 		if(productName && amount){
 			newContext.productName = productName
 			newContext.amount	= amount
-			newContext.price = price
+			newContext.price	= newContext.amount*price;
 		} else if(productName && !amount)
 		{	
 			newContext.productName = productName
@@ -121,9 +142,8 @@ var actions = {
 		}//database
 
 		return Promise.resolve(newContext)
-	}
-
-	)},
+	},
+	
 	payment({sessionId, context, entities}) {
 		var newContext = {};
 		var price	 = firstEntityValue(entities, 'productName')
