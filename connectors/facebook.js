@@ -145,44 +145,33 @@ var newButtons = (id, msg, replies, cb) => {
 }
 
 var newLists = (id, msg, replies, cb) => {
-	var elements = [
-	{
-		"title": "Classic T-Shirt Collection",
-		"image_url": "https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/17425116_1895095950728822_7374737738582360191_n.jpg?oh=01062fd616b5e982fe0801eefa4ae1df&oe=59589A49",
-		"subtitle": "See all our colors"
-	}];
-
-	elements = elements.concat(
-		replies.map(item => ({
-			"title": "Classic White T-Shirt",
-			"image_url": "https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/17458039_1895643334007417_8023598012425899845_n.jpg?oh=7ffa8f38c3c84a9bbcc6cb341d5f245c&oe=59607DEE",
-			"subtitle": "100% Cotton, 200% Comfortable",
-			// "default_action": {
-			// //     "type": "web_url",
-			// //     "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
-			// //     "messenger_extensions": true,
-			// //     "webview_height_ratio": "tall",
-			// //     "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-			// },
-			"buttons": [
-				{
-				  "type": "postback",
-				  title: item,
-				  payload: item,
-				  messenger_extensions: true,
-				  "webview_height_ratio": "tall",
-				}
-			]
-		}))
-	)
-
 	return createMessage(id,
 		{
 		  attachment: {
 		      "type": "template",
 		      payload: {
 		          "template_type": "list",
-		          elements: elements
+		          elements: replies.map(item => ({
+                "title": "Classic White T-Shirt",
+                "image_url": "https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-9/17458039_1895643334007417_8023598012425899845_n.jpg?oh=7ffa8f38c3c84a9bbcc6cb341d5f245c&oe=59607DEE",
+                "subtitle": "100% Cotton, 200% Comfortable",
+                // "default_action": {
+                // //     "type": "web_url",
+                // //     "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                // //     "messenger_extensions": true,
+                // //     "webview_height_ratio": "tall",
+                // //     "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                // },
+                "buttons": [
+                  {
+                    "type": "postback",
+                    title: item,
+                    payload: item,
+                    messenger_extensions: true,
+                    "webview_height_ratio": "tall",
+                  }
+                ]
+              }))
 		          //  "buttons": [
 		          //     {
 		          //         "title": "View More",
@@ -196,10 +185,6 @@ var newLists = (id, msg, replies, cb) => {
 }
 
 var newCarousels = (id, msg, replies, cb) => {
-  var elements = [];
-
-  elements = elements.concat(
-		)
 	return createMessage(id,
   {
     "attachment":{
