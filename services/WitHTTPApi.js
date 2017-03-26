@@ -41,7 +41,8 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
                 v: apiVersion,
                 session_id: sessionId,
                 q: "",
-              }
+              },
+              body: context
             }, callback(sessionId, globalContext));
           });
         }
@@ -73,11 +74,12 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
   const runActions = (sessionId, message, context) => {
     newRequest({
       qs: {
-        context: Object.assign({}, context),
+        context,
         v: apiVersion,
         session_id: sessionId,
         q: message
-      }
+      },
+      body: context
     }, callback(sessionId, context));
   };
   return {
