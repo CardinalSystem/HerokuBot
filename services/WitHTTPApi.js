@@ -38,7 +38,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
                 q: ""
               },
               body: context
-            }, callback(sessionId));
+            }, callback(sessionId, context));
           });
         }
       } else if (body.type === 'msg') {
@@ -53,7 +53,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
                 q: ""
               },
               body: context
-            }, callback(sessionId));
+            }, callback(sessionId, context));
           }).catch(err => console.error(err));
         }
       } else if (body.type === 'stop') {
@@ -72,7 +72,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         q: message
       },
       body: context
-    }, callback(sessionId));
+    }, callback(sessionId, context));
   };
   return {
     runActions,
