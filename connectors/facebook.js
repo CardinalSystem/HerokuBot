@@ -252,7 +252,7 @@ module.exports = {
 	newQuickReply,
 	newButtons,
 	newLists,
-  	newCarousels,
+ 	newCarousels,
 	getMessageEntry,
 	getUserProfile
 }
