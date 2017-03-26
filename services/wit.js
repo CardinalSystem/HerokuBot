@@ -105,7 +105,7 @@ var actions = {
 		db.all('SELECT ProductName,ProductUnitPrice from Products where productName=%'+name+'%',function(err,rows){
 			price = rows.ProductUnitPrice;
 			productName = rows.ProductName;
-		});
+		
 		newContext.productName = productName;
 		newContext.amount		= amount;
 		newContext.price		= newContext.amount*price;
@@ -121,7 +121,9 @@ var actions = {
 		}//database
 
 		return Promise.resolve(newContext)
-	},
+	}
+
+	)},
 	payment({sessionId, context, entities}) {
 		var newContext = {};
 		var price	 = firstEntityValue(entities, 'productName')
