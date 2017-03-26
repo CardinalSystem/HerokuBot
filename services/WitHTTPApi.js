@@ -50,18 +50,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.send) {
           throw new Error('not found: `send`');
         } else {
-          return actions.send(request, response).then(context => {
-            Object.assign(globalContext, context || {});
-            newRequest({
-              qs: {
-                context,
-                v: apiVersion,
-                session_id: sessionId,
-                q: ""
-              },
-              body: context
-            }, callback(sessionId, globalContext));
-          }).catch(err => console.error(err));
+          return actions.send(request, response)
         }
       } else if (body.type === 'stop') {
         if (!actions.stop) {
