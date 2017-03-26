@@ -61,36 +61,37 @@ var actions = {
 	// list of functions Wit.ai can execute
 	sayHello({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
-		var _context = {}
+		var myContext = {}
 		if(sex == 'male' || context.suffix == 'ครับ') {
-			_context.suffix = 'ครับ'
+			myContext.suffix = 'ครับ'
 		}
 		else{
-			_context.suffix = 'ค่ะ'
+			myContext.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(_context)
+		return Promise.resolve(myContext)
 
 	},
 	sayThanks({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
-		var _context = {}
+		var myContext = {}
 		if (sex == 'male' || context.suffix == 'ครับ'){
-			_context.suffix = 'ครับ'
+			myContext.suffix = 'ครับ'
 		} else {
-			_context.suffix = 'ค่ะ'
+			myContext.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(true)
+		console.log(myContext);
+		return Promise.resolve(myContext)
 	},
 	sayBye({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
-		var _context = {};
+		var myContext = {};
 		if(sex == 'male' || context.suffix == 'ครับ'){
-			_context.suffix = 'ครับ'
+			myContext.suffix = 'ครับ'
 		}
 		else {
-			_context.suffix = 'ค่ะ'
+			myContext.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(_context)
+		return Promise.resolve(myContext)
 
 	},
 	orderProduct({sessionId, context, entities}) {
