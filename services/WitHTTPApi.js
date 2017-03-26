@@ -54,7 +54,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
             Object.assign(globalContext, context || {});
             newRequest({
               qs: {
-                context: context,
+                context,
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""

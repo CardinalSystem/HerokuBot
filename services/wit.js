@@ -88,7 +88,7 @@ var actions = {
 		else {
 			myContext.suffix = 'ค่ะ'
 		}
-		return Promise.resolve({myContext})
+		return Promise.resolve(myContext)
 
 	},
 	orderProduct({sessionId, context, entities}) {
