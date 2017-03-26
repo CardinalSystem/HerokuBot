@@ -44,7 +44,7 @@ var actions = {
     })
 	},
 	stop({sessionId, context}) {
-		return Promise.resove()
+		return Promise.resolve()
 	},
 	end({sessionId, context}) {
 		context.done = true
