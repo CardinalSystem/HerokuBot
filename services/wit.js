@@ -108,6 +108,7 @@ var actions = {
 		return Promise.resolve(newContext)
 	},
 	payment({sessionId, context, entities}) {
+		var newContext = {};
 		var price	 = firstEntityValue(entities, 'productName')
 		newContext.price		= '100' //database
 
