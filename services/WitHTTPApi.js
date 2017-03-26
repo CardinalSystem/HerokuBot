@@ -16,7 +16,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     }
   });
 
-  const callback = (sessionId, msg, globalContext = {}) => (err, response, body) => {
+  const callback = (sessionId, globalContext = {}) => (err, response, body) => {
     if (err) return Promise.reject()
     if (body) {
       
