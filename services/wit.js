@@ -65,6 +65,7 @@ var actions = {
 		else{
 			myContext.suffix = 'ค่ะ'
 		}
+		myContext.name = context.first_name + ' ' + context.last_name
 		return Promise.resolve(myContext)
 
 	},
