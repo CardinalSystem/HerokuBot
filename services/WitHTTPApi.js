@@ -78,8 +78,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         v: apiVersion,
         session_id: sessionId,
         q: message
-      },
-      body: context
+      }
     }, callback(sessionId, context));
   };
   return {

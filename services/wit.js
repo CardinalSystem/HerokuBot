@@ -80,7 +80,7 @@ var actions = {
 			myContext.suffix = 'ค่ะ'
 		}
 		console.log(myContext);
-		return Promise.resolve(myContext)
+		return Promise.resolve(Object.assign({}, myContext))
 	},
 	sayBye({sessionId, context, entities}) {
 		var sex = firstEntityValue(entities, 'sex')
