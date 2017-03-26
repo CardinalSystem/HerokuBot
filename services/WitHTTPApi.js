@@ -17,7 +17,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
   });
 
   const callback = (sessionId, globalContext = {}) => (err, response, body) => {
-    if (err) return Promise.reject()
+    if (err) contexturn Promise.reject()
     if (body) {
       
       console.log('[callback]: ', sessionId, body.type + ':' + body.action);
@@ -32,17 +32,16 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: ' + body.action);
         } else {
 
-          return actions[ body.action ](response).then(function (ret) {
-            globalContext = Object.assign(ret || {}, globalContext);
-            console.log(body.action, ret);
+          contexturn actions[ body.action ](response).then(function (context) {
+            Object.assign(globalContext, context || {});
+            console.log(body.action, context);
             newRequest({
               qs: {
-                context: ret,
+                context,
                 v: apiVersion,
                 session_id: sessionId,
                 q: "",
-              },
-              body: ret
+              }
             }, callback(sessionId, globalContext));
           });
         }
@@ -50,16 +49,15 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.send) {
           throw new Error('not found: `send`');
         } else {
-          return actions.send(request, response).then(ret => {
-            globalContext = Object.assign(ret || {}, globalContext);
+          contexturn actions.send(request, response).then(context => {
+            Object.assign(globalContext, context || {});
             newRequest({
               qs: {
-                context: ret,
+                context,
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""
-              },
-              body: ret
+              }
             }, callback(sessionId, globalContext));
           }).catch(err => console.error(err));
         }
@@ -67,7 +65,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.stop) {
           throw new Error('not found: `stop`');
         }
-        return actions.stop(response);
+        contexturn actions.stop(response);
       }
     }
   };
@@ -81,7 +79,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
       }
     }, callback(sessionId, context));
   };
-  return {
+  contexturn {
     runActions,
     interactive: () => {}
   };
