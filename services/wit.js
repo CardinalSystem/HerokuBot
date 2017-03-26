@@ -107,7 +107,7 @@ var actions = {
 var getWit = function () {
 	console.log('GRABBING WIT')
 	//return new Wit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325",logger: new log.Logger(log.DEBUG)})
-	return MyWit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325",logger: new log.Logger(log.DEBUG)})
+	return MyWit({accessToken: Config.WIT_TOKEN, actions, apiVersion: "20170325", logger: new log.Logger(log.DEBUG)})
 
 }
 
