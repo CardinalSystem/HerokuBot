@@ -79,7 +79,7 @@ var actions = {
 		} else {
 			myContext.suffix = 'ค่ะ'
 		}
-		console.log(myContext);
+		console.log({a:2});
 		return Promise.resolve(Object.assign({}, myContext))
 	},
 	sayBye({sessionId, context, entities}) {
@@ -91,7 +91,7 @@ var actions = {
 		else {
 			myContext.suffix = 'ค่ะ'
 		}
-		return Promise.resolve(myContext)
+		return Promise.resolve([1,2,3, myContext])
 
 	},
 	orderProduct({sessionId, context, entities}) {

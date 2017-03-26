@@ -35,7 +35,6 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           return actions[ body.action ](response).then(ret => {
             globalContext = Object.assign(ret || {}, globalContext);
             console.log(body.action, ret);
-            console.log(body.action, globalContext)
             newRequest({
               qs: {
                 context: ret,
