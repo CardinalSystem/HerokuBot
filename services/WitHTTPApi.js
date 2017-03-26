@@ -23,8 +23,8 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
       console.log('[callback]: ', sessionId, body.type + ':' + body.action);
       console.log('[callback]: ' + JSON.stringify(globalContext)); //, context, body);
       
-      const request = {sessionId, context: globalContext};
-      const response = {sessionId, context: globalContext, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
+      const request = {sessionId, context: Object.assign({}, globalContext});
+      const response = {sessionId, context: Object.assign({}, globalContext}), text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
 
       if (body.type === 'action') {
         
@@ -35,6 +35,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           return actions[ body.action ](response).then(ret => {
             globalContext = Object.assign(ret || {}, globalContext);
             console.log(body.action, ret);
+            console.log(body.action, globalContext)
             newRequest({
               qs: {
                 context: ret,
@@ -74,7 +75,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
   const runActions = (sessionId, message, context) => {
     newRequest({
       qs: {
-        context,
+        context: Object.assign({}, context),
         v: apiVersion,
         session_id: sessionId,
         q: message
