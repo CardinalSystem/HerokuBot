@@ -27,7 +27,7 @@ var findOrCreateSession = function (fbid) {
       }
     }
   } else {
-  	sessions[newSessionId] = Object.assign({}, sessions[newSessionId])
+  	sessions[newSessionId] = Object.assign({}, sessions[sessionId])
   }
 
   return newSessionId
