@@ -113,10 +113,9 @@ var actions = {
 			newContext.productName = productName
 			newContext.amount	= amount
 			newContext.price = price
-		} else if(productName && amount = {})
+		} else if(productName && !amount)
 		{	
 			newContext.productName = productName
-			delete newContext.productName
 		} else {
 			newContext.missingProductName = true
 		}//database
