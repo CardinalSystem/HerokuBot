@@ -20,7 +20,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     if (err) return Promise.reject()
     if (body) {
       
-      console.log(sessionId); //, context, body);
+      console.log(sessionId, body.entities && body.entities.intent || ''); //, context, body);
       
       const request = {sessionId, context};
       const response = {sessionId, context, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
