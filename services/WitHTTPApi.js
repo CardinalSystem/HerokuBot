@@ -1,10 +1,20 @@
 const request = require('request');
 
-var Wit = ({apiVersion, actions, logger, accessToken}) => {
+var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
 
   if (!accessToken) {
     throw new Error('empty WIT accessToken');
   }
+
+  const newRequest = request.defaults({
+    uri: "https://api.wit.ai/converse",
+    method: "POST",
+    json: true,
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Accept': 'application/vnd.wit.'+ apiVersion + '+json'
+    }
+  });
 
   const callback = (sessionId) => (err, response, body) => {
     if (err) return Promise.reject()
@@ -15,14 +25,13 @@ var Wit = ({apiVersion, actions, logger, accessToken}) => {
           throw new Error('not found: ' + body.action);
         } else {
           return actions[ body.action ](body).then(context => {
-            request.post({
-              uri: "https://api.wit.ai/converse",
+            newRequest({
               qs: {
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""
               },
-              form: context
+              body: context
             }, callback(sessionId));
           });
         }
@@ -31,14 +40,13 @@ var Wit = ({apiVersion, actions, logger, accessToken}) => {
           throw new Error('not found: `send`');
         } else {
           return actions.send.then(context => {
-            request.post({
-              uri: "https://api.wit.ai/converse",
+            newRequest({
               qs: {
                 v: apiVersion,
                 session_id: sessionId,
                 q: ""
               },
-              form: context
+              body: context
             }, callback(sessionId));
           }).catch(err => console.error(err));
         }
@@ -51,14 +59,13 @@ var Wit = ({apiVersion, actions, logger, accessToken}) => {
     }
   };
   const runActions = (sessionId, message, context) => {
-    request.post({
-      uri: "https://api.wit.ai/converse",
+    newRequest({
       qs: {
         v: apiVersion,
         session_id: sessionId,
         q: message
       },
-      form: context
+      body: context
     }, callback(sessionId));
   };
   return {
