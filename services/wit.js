@@ -128,7 +128,7 @@ var actions = {
 		var productName = firstEntityValue(entities, 'productName');
 		var amount = firstEntityValue(entities, 'amount');
 		var price = Math.random()*100000 + 100
-	
+		newContext.missingProductName = true
 		
 		if(productName && amount){
 			newContext.productName = productName
@@ -138,12 +138,12 @@ var actions = {
 		{	
 			newContext.productName = productName
 		} else {
-			newContext.missingProductName = true
+			
 		}//database
 
 		return Promise.resolve(newContext)
 	},
-	
+
 	payment({sessionId, context, entities}) {
 		var newContext = {};
 		var price	 = firstEntityValue(entities, 'productName')
