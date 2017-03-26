@@ -32,7 +32,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
           throw new Error('not found: ' + body.action);
         } else {
 
-          return actions[ body.action ](response).then(ret => {
+          return actions[ body.action ](response).then(function (ret) {
             globalContext = Object.assign(ret || {}, globalContext);
             console.log(body.action, ret);
             newRequest({
