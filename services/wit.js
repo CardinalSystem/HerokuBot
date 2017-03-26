@@ -47,9 +47,8 @@ var actions = {
 		return Promise.resolve()
 	},
 	end({sessionId, context}) {
-		context.done = true
-		console.log('[end]: ', context, sessionId);
-		return Promise.resolve(context)
+		console.log('[end]: ', sessionId);
+		return Promise.resolve({done: true})
 	},
 
 	error({sessionId, context}) {
