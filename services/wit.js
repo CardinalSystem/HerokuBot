@@ -43,6 +43,9 @@ var actions = {
 		 	return resolve();
     })
 	},
+	stop({sessionId, context}) {
+		return Promise.resove()
+	},
 	end({sessionId, context}) {
 		context.done = true
 		console.log('[end]: ', context, sessionId);
