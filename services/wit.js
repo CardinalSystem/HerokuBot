@@ -112,7 +112,7 @@ var actions = {
 		newContext.price		= '100' //database
 
 		return Promise.resolve(newContext)
-
+	}
 
 }
 
