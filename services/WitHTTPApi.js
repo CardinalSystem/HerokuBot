@@ -16,15 +16,21 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
     }
   });
 
-  const callback = (sessionId) => (err, response, body) => {
+  const callback = (sessionId, context) => (err, response, body) => {
     if (err) return Promise.reject()
     if (body) {
+      
       console.log(body);
+      
+      const request = {sessionId, context};
+      const response = {sessionId, context, text: body.msg, quickreplies: body.quickreplies, entities: body.entities, confidence: body.confidence};
+
       if (body.type === 'action') {
         if(!actions[ body.action ]) {
           throw new Error('not found: ' + body.action);
         } else {
-          return actions[ body.action ](body).then(context => {
+
+          return actions[ body.action ](response).then(context => {
             newRequest({
               qs: {
                 v: apiVersion,
@@ -39,7 +45,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.send) {
           throw new Error('not found: `send`');
         } else {
-          return actions.send.then(context => {
+          return actions.send(request, response).then(context => {
             newRequest({
               qs: {
                 v: apiVersion,
@@ -54,7 +60,7 @@ var Wit = ({apiVersion = '20160526', actions, logger, accessToken}) => {
         if (!actions.stop) {
           throw new Error('not found: `stop`');
         }
-        return actions.stop;
+        return actions.stop(response);
       }
     }
   };
