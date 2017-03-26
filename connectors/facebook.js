@@ -197,8 +197,8 @@ var newLists = (id, msg, replies, cb) => {
 		  attachment: {
 		      "type": "template",
 		      payload: {
-		          "template_type": "list",
-		          elements
+		          elements,
+		          "template_type": "list"
 		          //  "buttons": [
 		          //     {
 		          //         "title": "View More",
@@ -208,7 +208,7 @@ var newLists = (id, msg, replies, cb) => {
 		          // ]
 		      }
 		  }
-		})
+		}, cb)
 }
 // PARSE A FACEBOOK MESSAGE to get user, message body, or attachment
 // https://developers.facebook.com/docs/messenger-platform/webhook-reference
