@@ -30,9 +30,9 @@ var actions = {
       //console.log('[send] [req]', JSON.stringify(request))
       
       if (response.quickreplies) {
-				// FB.newQuickReply(id, response.text, response.quickreplies)
+				FB.newQuickReply(id, response.text, response.quickreplies)
 				//FB.newCarousels(id, response.text, response.quickreplies)
-				FB.newLists(id, response.text, response.quickreplies)
+				//FB.newLists(id, response.text, response.quickreplies)
 			} else if (response.text) {
       
       	if (checkURL(response.text)) {
