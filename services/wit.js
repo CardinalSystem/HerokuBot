@@ -98,10 +98,6 @@ var actions = {
 	orderProduct({sessionId, context, entities}) {
 		
 		var newContext = {};
-		if()
-		{
-
-		}
 		var name = firstEntityValue(entities, 'productName');
 		var amount = firstEntityValue(entities, 'amount');
 		var price
