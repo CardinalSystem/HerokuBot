@@ -6,7 +6,7 @@ var {Wit, log} = require('node-wit')
 var MyWit = require('./WitHTTPApi')
 var request = require('request')
 var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3Database('./database.db')
+var db = new sqlite3.Database('./database.db')
 
 
 var firstEntityValue = function (entities, entity) {
